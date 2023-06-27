@@ -7,6 +7,11 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router()
 router.post('/');
 
+router.get('/', async (req, res, next) => {
+    const user = req.user;
+    res.json(user);
+})
+
 router.post('/', isNotLoggedIn,  async (req, res, next) => {
     try {
         const hash = await bcrypt.hash(req.body.password, 12);
@@ -18,16 +23,29 @@ router.post('/', isNotLoggedIn,  async (req, res, next) => {
         });
 
         if (exUser) {
-            return res.status(403).json({
-                errorCode: 1,
-                errorMessage: '이미 가입된 이름입니다.',
-            });
+            return res.status(403).json('이미 가입된 이름입니다.');
         }
         const newUser = await db.User.create({
             name: req.body.name,
             password: hash,
         });
-        return res.status(201).json(newUser);
+        
+        passport.authenticate('local', (err, user, info) => {
+            if (err) {
+                console.error(err);
+                return next(err);
+            }
+            if (info) {
+                return res.status(401).send(info.reason);
+            }
+            return req.login(user, async (err) => {
+                if (err) {
+                    console.error(err);
+                    return next(err);
+                }
+                return res.json(user);
+            });
+        })(req, res, next);
     } catch(err){
         console.log(err);
         return next(err);

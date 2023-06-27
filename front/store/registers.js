@@ -4,6 +4,9 @@ export const state = () => ({
 });
 
 export const mutations = {
+    setMainCompany(state, payload) {
+        state.mainCompany = payload;
+    },
     addMainCompany(state, payload) {
         state.mainCompany.push(payload);
     },
@@ -13,9 +16,19 @@ export const mutations = {
 };
 
 export const actions = {
-    async companyReg({ commit }, payload) {
+    async loadCompanies({ commit }, payload) {
         try {
-            const res = await this.$axios.post('http://localhost:3085/register/company', {
+            const res = await this.$axios.get('/register/company', {
+                withCredentials: true,
+            });
+            commit('setMainCompany', res.data);
+        } catch(err) {
+            console.error(err);
+        }
+    },
+    async createCompany({ commit }, payload) {
+        try {
+            const res = await this.$axios.post('/register/company', {
                 CompanyName: payload.companyName,
             }, {
                 withCredentials: true,

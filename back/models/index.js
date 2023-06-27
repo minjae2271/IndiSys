@@ -7,6 +7,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 
 db.User = require('./user')(sequelize, Sequelize);
 db.Task = require('./task')(sequelize, Sequelize);
+db.Image = require('./image')(sequelize, Sequelize);
 db.Company = require('./company')(sequelize, Sequelize);
 db.Size = require('./size')(sequelize, Sequelize);
 db.Mirror = require('./mirror')(sequelize, Sequelize);

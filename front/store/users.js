@@ -9,8 +9,22 @@ export const mutations = {
 };
 
 export const actions = {
+    async loadUser({ commit }, payload) {
+        try{
+            const res = await this.$axios.get('user', {
+                withCredentials: true
+            });
+            commit('setMe', res.data);
+        } catch(err) {
+            console.error(err);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
+        }
+    },
     signUp({ commit }, payload) {
-        this.$axios.post('http://localhost:3085/user', {
+        this.$axios.post('user', {
             name: payload.name,
             password: payload.password,
         }, {
@@ -21,10 +35,14 @@ export const actions = {
         })
         .catch((err) => {
             console.error(err);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
         });        
     },
     logIn({ commit }, payload) {
-        this.$axios.post('http://localhost:3085/user/login', {
+        this.$axios.post('user/login', {
             name: payload.name,
             password: payload.password, 
         }, {
@@ -35,10 +53,14 @@ export const actions = {
         })
         .catch((err) => {
             console.error(err);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
         });  
     },
     logOut({ commit }, payload) {
-        this.$axios.post('http://localhost:3085/user/logout', {
+        this.$axios.post('user/logout', {
 
         }, {
             withCredentials: true,
@@ -48,6 +70,10 @@ export const actions = {
         })
         .catch((err) => {
             console.error(err);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
         });  
     }
 }

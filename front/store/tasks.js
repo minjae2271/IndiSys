@@ -1,66 +1,203 @@
 export const state = () => ({
     mainTasks: [],
-    taskRows: [],
+    mainTask: null,
     taskRegisterMessage: null,
+    beforeImages: [],
+    afterImages: [],
 });
 
 export const mutations = {
     loadMainTasks(state, payload) {
-        state.mainTasks = payload;
+        const rows = payload.map((obj) => {
+            let rObj = {};
+            rObj['start_date'] = obj['start_date'];
+            rObj['done_date'] = obj['done_date'];
+            rObj['status'] = obj['status'];
+            rObj['name'] = obj['User'].name;
+            rObj['id'] = obj['id'];
+            return rObj
+        });
+        state.mainTasks = rows;
+    },
+    loadMainTask(state, payload) {
+        state.mainTask = payload;
     },
     addMainTasks(state, payload) {
+        let rObj = {};
+        rObj['start_date'] = payload['start_date'];
+        rObj['done_date'] = payload['done_date'];
+        rObj['status'] = payload['status'];
+        rObj['name'] = payload['User'].name;
+        rObj['id'] = payload['id'];
         state.mainTasks.push(payload);
     },
-    setTaskRows(state, payload) {
-        const rows = payload.map((obj) => {
-            if(obj.key === 'User') {
-                let rObj = {};
-                rObj[obj.key] = obj.value.name
-                // console.log(rObj)
-                return rObj;
-            } else {
-                // console.log(obj)
-                return obj;
-            }
+    deleteMainTask(state, payload) {
+        const index = state.mainTasks.findIndex(v => {
+            v.id === payload.id
         });
-        // console.log(rows)
-        state.taskRows = rows;
+        state.mainTasks.splice(index, 1);
     },
-    setTaskRegisterMessage(state, payload) {
-        state.taskRegisterMessage = payload;
+    concatBeforeImage(state, payload) {
+        state.beforeImages = state.beforeImages.concat(payload);
+    },
+    concatAfterImage(state, payload) {
+        state.afterImages = state.afterImages.concat(payload);
+    },
+    removeBeforeImage(state, payload) {
+        state.beforeImages.splice(payload, 1);
+    },
+    removeAfterImage(state, payload) {
+        state.afterImages.splice(payload, 1);
+    },
+    deleteImgFromMainTask(state, payload) {
+        //findIndex 내부로직 {} 할 시 index가 무조건 -1로 나오는 현상
+        const index = state.mainTask.Images.findIndex(v => v.id === payload);
+        state.mainTask.Images.splice(index, 1);
+    },
+    clearImages(state) {
+        state.beforeImages = []
+        state.afterImages = []
     },
 };
 
 export const actions = {
-    async createTask({ commit }, payload) {
+    async loadTasks({ commit }, payload) {
         try {
-            const res = await this.$axios.post('http://localhost:3085/task/createTask', {
-                userId: payload.userId,
+            const res = await this.$axios.get(`task/loadTasks?from=${payload.from}&to=${payload.to}&statusCheck=${payload.statusCheck}`, {
+                withCredentials: true,
+            });
+            commit('loadMainTasks', res.data);
+            commit('clearImages')
+        }
+        catch (err) {
+            console.error(err);
+        }
+    },
+    async loadTask({ commit }, payload) {
+        try {
+            const res = await this.$axios.get(`task/loadTask?id=${payload.id}`, {
+                withCredentials: true
+            });
+            commit('loadMainTask', res.data)
+        } catch(err) {
+            console.error(err);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
+        }
+    },
+    async finishTask( {commit, state }, payload) {
+        try {
+            const res = await this.$axios.post('task/finishTask', {
+                id: payload.id,
+                beforeImages: state.beforeImages,
+                afterImages: state.afterImages,
+            }, {
+                withCredentials: true,
+            });
+        } catch(err) {
+            console.log(err);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
+        }
+    },
+    async createTask({ commit, state }, payload) {
+        try {
+            const res = await this.$axios.post('task/createTask', {
+                from: payload.from,
+                to: payload.to,
                 taskText: payload.taskText,
             }, {
                 withCredentials: true,
             });
-            commit('addMainTasks', res.data);
-            commit('setTaskRegisterMessage', '작업등록이 완료 되었습니다.');
         }
         catch (err) {
             console.error(err);
-            commit('setTaskRegisterMessage', err.response.data.errorMessage ? err.response.data.errorMessage : err.message);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
         }
     },
-    async loadTasks({ commit }, payload) {
+    async editTask({ commit }, payload) {
         try {
-            const res = await this.$axios.get('http://localhost:3085/task/loadTasks', {
-
+            const res = await this.$axios.patch(`task/${payload.id}`, {
+                from: payload.from,
+                to: payload.to,
+                text: payload.text,
+                status: payload.status,
             }, {
                 withCredentials: true,
             });
-            // console.log(res.data)
-            commit('loadMainTasks', res.data);
-            commit('setTaskRows', res.data);
-        }
-        catch (err) {
+        }catch(err) {
             console.error(err);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
+        }
+    },
+    async deleteTask({ commit }, payload) {
+        try {
+            const res = await this.$axios.delete(`task/${payload.id}`, {
+                withCredentials: true,
+            });
+            commit('deleteMainTask', payload);
+        }
+        catch(err) {
+            console.error(err);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
+        }
+    },
+    async uploadBeforeImages({ commit }, payload) {
+        try {
+            const res = await this.$axios.post(`task/before`, payload, {
+                withCredentials: true,
+            });
+            commit('concatBeforeImage', res.data);
+        } catch(err) {
+            console.error(err);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
+        }
+    },
+    async uploadAfterImages({ commit }, payload) {
+        try {
+            const res = await this.$axios.post(`task/after`, payload, {
+                withCredentials: true,
+            });
+            commit('concatAfterImage', res.data)
+        } catch(err) {
+            console.error(err);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
+        }
+    },
+    async deleteImg({ commit }, payload) {
+        try {
+            console.log(typeof payload)
+            console.log(payload)
+            const stringId = payload.toString()
+            const res = await this.$axios.delete(`task/deleteImg/${stringId}`, {
+                withCredentials: true,
+            });
+            commit('deleteImgFromMainTask', payload)
+        } catch(err) {
+            console.error(err);
+            return $nuxt.error({
+                statusCode: err.response.status,
+                errorMessage: err.response.data
+            });
         }
     }
 }

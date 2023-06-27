@@ -26,6 +26,9 @@
 
 <script>
 export default {
+    fetch({ store }) {
+    store.dispatch('registers/loadCompanies');
+  },
     data() {
         return {
             valid: true,
@@ -47,7 +50,7 @@ export default {
         async onSubmitForm() {
             if(this.$refs.form.validate()) {
                 try{
-                    await this.$store.dispatch('registers/companyReg', {
+                    await this.$store.dispatch('registers/createCompany', {
                         companyName: this.companyName,
                     });
                 }

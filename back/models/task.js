@@ -1,7 +1,11 @@
 module.exports = (Sequelize, DataTypes) => {
     const Task = Sequelize.define('Task', {
-        date: {
-            type: DataTypes.DATE,
+        start_date: {
+            type: DataTypes.DATEONLY,
+            allowNull: false,
+        },
+        done_date: {
+            type: DataTypes.DATEONLY,
             allowNull: false,
         },
         status: {
@@ -18,6 +22,7 @@ module.exports = (Sequelize, DataTypes) => {
     });
     Task.associate = (db) => {
         db.Task.belongsTo(db.User);
+        db.Task.hasMany(db.Image);
     };
     return Task;
 }

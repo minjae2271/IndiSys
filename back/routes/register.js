@@ -2,7 +2,17 @@ const express = require('express');
 const db = require('../models');
 const { isLoggedIn } = require('./middlewares');
 
-const router = express.Router()
+const router = express.Router();
+
+router.get('/company', async (req, res, next) => {
+    try {
+        const companies = await db.Company.findAll();
+        return res.status(200).json(companies);
+    } catch(err) {
+        console.error(err);
+        return next(err);
+    }
+})
 
 router.post('/company', isLoggedIn, async (req, res, next) => {
     try {
