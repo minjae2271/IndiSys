@@ -8,28 +8,40 @@
                     </v-card-title>
                         <v-card-subtitle class="mt-3" style="font-size:1.5em">
                             <template v-if="mainTask.status === '1'">
-                                <span class="me-1">진행중</span>
-                                <v-icon 
-                                    color="success"
-                                    icon="mdi-circle-slice-2"
-                                    size="small">
+                                <v-chip
+                                    class="me-1"
+                                    color="primary"
+                                    label
+                                >
+                                <v-icon left>
+                                    mdi-circle-slice-2
                                 </v-icon>
+                                진행중
+                                </v-chip>
                             </template>
                             <template v-else-if="mainTask.status === '2'">
-                                <span class="me-1">보류</span>
-                                <v-icon 
-                                    color="error"
-                                    icon="mdi-stop-circle-outline"
-                                    size="small">
+                                <v-chip
+                                    class="me-1"
+                                    color="warning"
+                                    label
+                                >
+                                <v-icon left>
+                                    mdi-stop-circle-outline
                                 </v-icon>
+                                보류
+                                </v-chip>
                             </template>
                             <template v-else-if="mainTask.status === '3'">
-                                <span class="me-1">완료</span>
-                                <v-icon 
-                                    color="action"
-                                    icon="mdi-check-outline"
-                                    size="small">
+                                <v-chip
+                                    class="me-1"
+                                    color="success"
+                                    label
+                                >
+                                <v-icon left>
+                                    mdi-check-outline
                                 </v-icon>
+                                완료
+                                </v-chip>
                             </template>
                         </v-card-subtitle>
                         <v-card-text class="mt-5" style="font-size:2em">

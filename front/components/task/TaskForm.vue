@@ -123,6 +123,16 @@ export default {
     }
   },
   methods: {
+    fromSearch(v) {
+            this.from = v;
+            this.menu1 = false;
+            this.$refs.menu1.save(v);
+        },
+      toSearch(v) {
+          this.to = v;
+          this.menu2 = false;
+          this.$refs.menu2.save(v);
+      },
     async onSubmitForm() {
       try{
         await this.$store.dispatch('tasks/createTask', {

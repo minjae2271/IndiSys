@@ -158,7 +158,6 @@ export default {
       page:1,
       pageCount: 0,
       totalVisible: 10,
-      //momnet today!!!
       from: moment().format('YYYY-MM-DD'),
       to: moment().format('YYYY-MM-DD'),
       statusCheck: "1",

@@ -12,7 +12,16 @@ export const mutations = {
             let rObj = {};
             rObj['start_date'] = obj['start_date'];
             rObj['done_date'] = obj['done_date'];
-            rObj['status'] = obj['status'];
+            if (obj['status'] === '1') {
+                rObj['status'] = "진행중"
+            }
+            if (obj['status'] === '2') {
+                rObj['status'] = "보류"
+            }
+            if (obj['status'] === '3') {
+                rObj['status'] = "완료"
+            }
+            rObj['statusCode'] = obj['status'];
             rObj['name'] = obj['User'].name;
             rObj['id'] = obj['id'];
             return rObj
