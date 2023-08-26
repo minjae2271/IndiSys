@@ -12,6 +12,10 @@ module.exports = (Sequelize, DataTypes) => {
             type: DataTypes.STRING(10),
             allowNull: false
         },
+        task_title: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
         task_text: {
             type: DataTypes.TEXT,
             allowNull: false

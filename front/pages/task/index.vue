@@ -1,16 +1,21 @@
 <template>
   <v-container>
+    <div class="header">
+      <h2>일일업무</h2>
+    </div>
     <v-data-table
       :headers="headers"
       :items="mainTasks"
       :items-per-page="10"
+      :item-class="itemRowBackground"
       :page.sync="page"
+      no-data-text="상태, 날짜를 선택해주세요."
       hide-default-footer
       @click:row="taskDetail"
       @page-count="pageCount = $event"
     >
       <template v-slot:top>
-        <v-toolbar
+        <!-- <v-toolbar
         flat
         >
         <v-toolbar-title>
@@ -20,19 +25,22 @@
           class="mx-4"
           inset
           vertical
-        ></v-divider>
-        <v-select
-          v-model="statusCheck"
-          :items="selectItems"
-          item-text="name"
-          item-value="statusCode"
-          hide-details="true"
-          label="작업상태"
-        >
-        </v-select>
-        <v-row>
+        ></v-divider> -->
+        <v-row no-gutters>
+          <v-col class="task-preset" cols="12" lg="4">
+            <v-select
+              v-model="statusCheck"
+              :items="selectItems"
+              item-text="name"
+              item-value="statusCode"
+              hide-details="true"
+              label="작업상태"
+              outlined
+            >
+            </v-select>
+          </v-col>
           <!-- menu1 -->
-          <v-col cols="12" lg="6">
+          <v-col class="task-preset" cols="12" lg="4">
             <v-menu
               ref="menu1"
               v-model="menu1"
@@ -40,7 +48,7 @@
               :return-value.sync="from"
               transition="scale-transition"
               offset-y
-              min-width="350px"
+              min-width="300px"
               >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
@@ -50,6 +58,8 @@
                   hide-details="true"
                   v-bind="attrs"
                   v-on="on"
+                  label="작업시작일"
+                  outlined
                 ></v-text-field>
               </template>
               <v-date-picker
@@ -76,7 +86,7 @@
             </v-menu>
           </v-col>
           <!-- menu2 -->
-          <v-col cols="12" lg="6">
+          <v-col class="task-preset" cols="12" lg="4">
             <v-menu
               ref="menu2"
               v-model="menu2"
@@ -84,8 +94,8 @@
               :return-value.sync="to"
               transition="scale-transition"
               offset-y
-              min-width="350px"
-              >
+              min-width="300px"
+            >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="to"
@@ -94,6 +104,8 @@
                   hide-details="true"
                   v-bind="attrs"
                   v-on="on"
+                  label="작업종료일"
+                  outlined
                 ></v-text-field>
               </template>
               <v-date-picker
@@ -120,30 +132,35 @@
             </v-menu>
           </v-col>
         </v-row>
-        <v-btn
-          dark
-          class="ml-2"
-          @click="searchTasks"
-        >
-          조회
-        </v-btn>
-        <v-spacer></v-spacer>
-        </v-toolbar>
+        <!-- <v-spacer></v-spacer> -->
+        <!-- </v-toolbar> -->
       </template>
     </v-data-table>
-    <v-pagination
-      v-model="page"
-      :length="pageCount"
-      :total-visible="totalVisible"
-      next-icon="mdi-menu-right"
-      prev-icon="mdi-menu-left"
-    ></v-pagination>
-    <v-btn
-    dark
-    to='/task/createTask'
-    >
-      등록
-    </v-btn>
+    <v-row justify="center" no-gutters>
+      <v-pagination
+        v-model="page"
+        :length="pageCount"
+        :total-visible="totalVisible"
+        next-icon="mdi-menu-right"
+        prev-icon="mdi-menu-left"
+      >
+      </v-pagination>
+    </v-row>
+    <div class="btn-group">
+      <v-btn
+      dark
+      to='/task/createTask'
+      >
+        업무등록
+      </v-btn>
+      <v-btn
+        dark
+        class="ml-3"
+        @click="searchTasks"
+      >
+      조회
+      </v-btn>
+    </div>
   </v-container>
 </template>
 
@@ -160,7 +177,7 @@ export default {
       totalVisible: 10,
       from: moment().format('YYYY-MM-DD'),
       to: moment().format('YYYY-MM-DD'),
-      statusCheck: "1",
+      statusCheck: "99",
       selectItems: [
         { name: "진행중", statusCode: "1"},
         { name: "보류", statusCode: "2"},
@@ -175,9 +192,9 @@ export default {
           value: 'start_date',
         },
         {
-          text: '종료날짜',
+          text: '작업내용',
           sortable: false,
-          value: 'done_date',
+          value: 'task_title',
         },
         {
           text: '작업상태',
@@ -188,10 +205,6 @@ export default {
           sortable: false,
           value: 'name' 
         },
-        // { text: '수정/삭제',
-        //   sortable: false,
-        //   value: 'actions' 
-        // },
       ],
     }
   },
@@ -234,11 +247,41 @@ export default {
     },
     taskDetail(row) {
       this.$router.push(`/task/${row.id}`)
+    },
+    itemRowBackground(item) {
+      if (item.status === "완료") {
+        return 'done-style';
+      }
     }
   }
 }
 </script>
 
 <style>
+.v-input {
+  width: calc(100% - 32px);
+}
+
+.task-preset {
+  margin-top: 20px;
+}
+
+.calendar {
+  border: 1px solid black;
+}
+
+.v-data-table__wrapper {
+  margin-top: 20px;
+}
+
+.done-style {
+  background-color: #cbf078;
+}
+
+.btn-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
 
 </style>

@@ -23,9 +23,9 @@
                     </v-btn>
                 </template>
                 <template v-else>
-                    <v-btn text to="/register/company">
+                    <!-- <v-btn text to="/register/company">
                         회사등록
-                    </v-btn>
+                    </v-btn> -->
                     <v-avatar color="indigo">
                         <v-icon dark>
                           mdi-account-circle
@@ -66,6 +66,15 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
 </style>

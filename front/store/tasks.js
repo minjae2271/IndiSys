@@ -24,6 +24,7 @@ export const mutations = {
             rObj['statusCode'] = obj['status'];
             rObj['name'] = obj['User'].name;
             rObj['id'] = obj['id'];
+            rObj['task_title'] = obj['task_title'];
             return rObj
         });
         state.mainTasks = rows;
@@ -38,6 +39,7 @@ export const mutations = {
         rObj['status'] = payload['status'];
         rObj['name'] = payload['User'].name;
         rObj['id'] = payload['id'];
+        rObj['task_title'] = payload['task_title'];
         state.mainTasks.push(payload);
     },
     deleteMainTask(state, payload) {
@@ -118,6 +120,7 @@ export const actions = {
             const res = await this.$axios.post('task/createTask', {
                 from: payload.from,
                 to: payload.to,
+                taskTitle: payload.taskTitle,
                 taskText: payload.taskText,
             }, {
                 withCredentials: true,
@@ -136,7 +139,8 @@ export const actions = {
             const res = await this.$axios.patch(`task/${payload.id}`, {
                 from: payload.from,
                 to: payload.to,
-                text: payload.text,
+                taskTitle: payload.taskTitle,
+                taskText: payload.taskText,
                 status: payload.status,
             }, {
                 withCredentials: true,

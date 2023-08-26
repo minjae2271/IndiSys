@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <div class="header">
+      <h2>업무수정</h2>
+    </div>
     <v-form
         ref='form'
         v-model="valid"
@@ -15,7 +18,7 @@
                 :return-value.sync="from"
                 transition="scale-transition"
                 offset-y
-                min-width="350px"
+                min-width="300px"
             >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
@@ -25,6 +28,8 @@
                 hide-details="true"
                 v-bind="attrs"
                 v-on="on"
+                label="작업시작일"
+                outlined
               ></v-text-field>
             </template>
             <v-date-picker
@@ -59,7 +64,7 @@
             :return-value.sync="to"
             transition="scale-transition"
             offset-y
-            min-width="350px"
+            min-width="300px"
             >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
@@ -69,6 +74,8 @@
                 hide-details="true"
                 v-bind="attrs"
                 v-on="on"
+                label="작업종료일"
+                outlined
               ></v-text-field>
             </template>
             <v-date-picker
@@ -97,9 +104,25 @@
     </v-row>
     <v-row>
       <v-col>
+          <v-text-field
+          id="edit-task-input"
+          v-model="taskTitle"
+          prepend-inner-icon="mdi-comment"
+          background-color="#fcf4d9"
+          label="작업제목"
+          :rules="Taskrule"
+          outlined
+          required
+        ></v-text-field>
         <v-textarea
-            v-model="text"
+            id="edit-task-textarea"
+            v-model="taskText"
+            prepend-inner-icon="mdi-comment"
+            background-color="#fcf4d9"
             label="작업내용"
+            :rules="Taskrule"
+            outlined
+            required
         ></v-textarea>
       </v-col>
     </v-row>
@@ -112,6 +135,7 @@
             item-value="statusCode"
             hide-details="true"
             label="작업상태"
+            outlined
         >
         </v-select>
       </v-col>
@@ -121,6 +145,7 @@
       <v-btn
           class="mt-7"
           type="submit"
+          dark
           >
           작업수정 하기
       </v-btn>
@@ -141,13 +166,17 @@ export default {
             menu2: false,
             from: this.task.start_date,
             to: this.task.done_date,
-            text: this.task.task_text,
+            taskTitle: this.task.task_title,
+            taskText: this.task.task_text,
             statusCheck: this.task.status,
             selectItems: [
                 { name: "진행중", statusCode: "1"},
                 { name: "보류", statusCode: "2"},
                 { name: "완료", statusCode: "3"},
             ],
+            Taskrule: [
+              v => !!v || "필수항목입니다."
+            ]
         }
     },
     methods: {
@@ -167,7 +196,8 @@ export default {
                     id: this.task.id,
                     from: this.from,
                     to: this.to,
-                    text: this.text,
+                    taskTitle: this.taskTitle,
+                    taskText: this.taskText,
                     status: this.statusCheck
                 });
                 this.$router.replace({ path: `/task/${this.task.id}`})

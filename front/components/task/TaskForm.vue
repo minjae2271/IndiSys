@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <div class="header">
+      <h2>업무등록</h2>
+    </div>
     <v-form
     ref="form"
     v-model="valid"
@@ -15,7 +18,7 @@
               :return-value.sync="from"
               transition="scale-transition"
               offset-y
-              min-width="350px"
+              min-width="300px"
           >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
@@ -59,7 +62,7 @@
           :return-value.sync="to"
           transition="scale-transition"
           offset-y
-          min-width="350px"
+          min-width="300px"
           >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
@@ -95,11 +98,32 @@
         </v-menu>
       </v-col>
   </v-row>
+  <v-row>
+    <v-col>
+      <v-text-field
+        id="task-input"
+        v-model="taskTitle"
+        prepend-inner-icon="mdi-comment"
+        background-color="#fcf4d9"
+        label="작업제목"
+        :rules="Taskrule"
+        outlined
+        required
+      ></v-text-field>
       <v-textarea
-      v-model="taskText"
+        id="task-textarea"
+        v-model="taskText"
+        prepend-inner-icon="mdi-comment"
+        background-color="#fcf4d9"
         label="작업내용"
+        :rules="Taskrule"
+        outlined
+        required
       ></v-textarea>
+    </v-col>
+  </v-row>
       <v-btn
+        dark
         type="submit"
         >
         작업등록
@@ -119,7 +143,11 @@ export default {
       from: moment().format('YYYY-MM-DD'),
       to: moment().format('YYYY-MM-DD'),
       valid: true,
+      taskTitle: '',
       taskText: '',
+      Taskrule: [
+        v => !!v || "필수항목입니다."
+      ]
     }
   },
   methods: {
@@ -138,6 +166,7 @@ export default {
         await this.$store.dispatch('tasks/createTask', {
           from: this.from,
           to: this.to,
+          taskTitle: this.taskTitle,
           taskText: this.taskText,
         });
         this.$router.replace({ path: '/task'})
@@ -149,6 +178,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

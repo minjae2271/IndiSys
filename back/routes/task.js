@@ -155,6 +155,7 @@ router.post('/createTask', isLoggedIn, async (req, res, next) => {
             start_date: req.body.from,
             done_date: req.body.to,
             status: "1",
+            task_title: req.body.taskTitle,
             task_text: req.body.taskText,
             UserId: req.user.id
         });
@@ -182,7 +183,8 @@ router.patch('/:id', isLoggedIn, async (req, res, next) => {
             start_date: req.body.from,
             done_date: req.body.to,
             status: req.body.status,
-            task_text: req.body.text,
+            task_title: req.body.taskTitle,
+            task_text: req.body.taskText,
         }, {
             where: {
                 id: req.params.id
