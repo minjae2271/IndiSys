@@ -57,6 +57,6 @@ module.exports = {
         }
     },
     server: {
-        port: process.env.PORT || 3081,
+        port: process.env.PORT || 3080,
     }
 }
