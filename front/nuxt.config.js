@@ -55,5 +55,8 @@ module.exports = {
             }
             console.log('webpack', config, isClient, isServer);
         }
+    },
+    server: {
+        port: process.env.PORT || 3081,
     }
 }
