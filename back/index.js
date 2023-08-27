@@ -10,6 +10,7 @@ const helmet = require('helmet');
 const dotenv = require('dotenv');
 
 const prod = process.env.NODE_ENV === 'production'
+console.log(prod);
 const passportConfig = require('./passport');
 const db = require('./models');
 const userRouter = require('./routes/user');
