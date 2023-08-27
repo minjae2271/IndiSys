@@ -33,7 +33,7 @@ if (prod) {
     app.use(hpp());
     app.use(morgan('combined'));
     app.use(cors({
-        origin: 'http://3.34.221.239:80',
+        origin: 'http://13.209.95.252/:80',
         credentials: true,
     }));
 
