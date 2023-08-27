@@ -92,10 +92,10 @@ export const actions = {
             commit('loadMainTask', res.data)
         } catch(err) {
             console.error(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         }
     },
     async finishTask( {commit, state }, payload) {
@@ -109,10 +109,10 @@ export const actions = {
             });
         } catch(err) {
             console.log(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         }
     },
     async createTask({ commit, state }, payload) {
@@ -128,10 +128,10 @@ export const actions = {
         }
         catch (err) {
             console.error(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         }
     },
     async editTask({ commit }, payload) {
@@ -147,10 +147,10 @@ export const actions = {
             });
         }catch(err) {
             console.error(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         }
     },
     async deleteTask({ commit }, payload) {
@@ -162,10 +162,10 @@ export const actions = {
         }
         catch(err) {
             console.error(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         }
     },
     async uploadBeforeImages({ commit }, payload) {
@@ -176,10 +176,10 @@ export const actions = {
             commit('concatBeforeImage', res.data);
         } catch(err) {
             console.error(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         }
     },
     async uploadAfterImages({ commit }, payload) {
@@ -190,10 +190,10 @@ export const actions = {
             commit('concatAfterImage', res.data)
         } catch(err) {
             console.error(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         }
     },
     async deleteImg({ commit }, payload) {
@@ -207,10 +207,10 @@ export const actions = {
             commit('deleteImgFromMainTask', payload)
         } catch(err) {
             console.error(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         }
     }
 }

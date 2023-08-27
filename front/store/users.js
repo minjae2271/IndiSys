@@ -17,10 +17,10 @@ export const actions = {
             commit('setMe', res.data);
         } catch(err) {
             console.error(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         }
     },
     signUp({ commit }, payload) {
@@ -35,10 +35,10 @@ export const actions = {
         })
         .catch((err) => {
             console.error(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         });        
     },
     logIn({ commit }, payload) {
@@ -53,10 +53,10 @@ export const actions = {
         })
         .catch((err) => {
             console.error(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         });  
     },
     logOut({ commit }, payload) {
@@ -70,10 +70,10 @@ export const actions = {
         })
         .catch((err) => {
             console.error(err);
-            return this.$nuxt.error({
-                statusCode: err.response.status,
-                errorMessage: err.response.data
-            });
+            // return this.$nuxt.error({
+            //     statusCode: err.response.status,
+            //     errorMessage: err.response.data
+            // });
         });  
     }
 }
