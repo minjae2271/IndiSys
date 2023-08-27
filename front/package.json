@@ -7,7 +7,7 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "prestart": "npm run build",
-    "start": "HOST=0.0.0.0 PORT=80 NODE_ENV=production pm2 start nuxt start"
+    "start": "HOST=0.0.0.0 PORT=80 NODE_ENV=production nuxt start"
   },
   "author": "",
   "license": "ISC",
