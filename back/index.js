@@ -29,7 +29,7 @@ if (prod) {
     app.use(hpp());
     app.use(morgan('combined'));
     app.use(cors({
-        origin: 'http://localhost:3080',
+        origin: 'http://3.34.221.239:80',
         credentials: true,
     }));
 
