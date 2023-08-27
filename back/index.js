@@ -10,7 +10,7 @@ const helmet = require('helmet');
 const dotenv = require('dotenv');
 
 const prod = process.env.NODE_ENV === 'production'
-console.log(prprocess.env.NODE_ENVod);
+console.log(process.env.NODE_ENV);
 console.log(process.env.NODE_ENV.length);
 console.log(process.env.PORT);
 console.log(process.env.PORT.length);
