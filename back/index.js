@@ -5,7 +5,11 @@ const passport = require('passport');
 const session = require('express-session');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
+const hpp = require('hpp');
+const helmet = require('helmet');
+const dotenv = require('dotenv');
 
+const prod = process.env.NODE_ENV === 'production'
 const passportConfig = require('./passport');
 const db = require('./models');
 const userRouter = require('./routes/user');
@@ -14,27 +18,44 @@ const taskRouter = require('./routes/task');
 
 const app = express();
 
+dotenv.config();
+
 db.sequelize.sync();
 // db.sequelize.sync({force:true});
 passportConfig();
 
-app.use(morgan('dev'));
-app.use(cors({
-    origin: 'http://localhost:3080',
-    credentials: true,
-}));
+if (prod) {
+    app.use(helmet());
+    app.use(hpp());
+    app.use(morgan('combined'));
+    app.use(cors({
+        origin: 'http://localhost:3080',
+        credentials: true,
+    }));
+
+} else {
+    app.use(morgan('dev'));
+    app.use(cors({
+        origin: 'http://localhost:3080',
+        credentials: true,
+    }));
+}
+
+
+
 app.use('/', express.static('uploads'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookie(process.env.COOKIE_SECRET));
 app.use(session({
-    secret: 'cookiesecret',
+    secret: process.env.COOKIE_SECRET,
     cookie: {
         httpOnly: true,
         secure: false,
+        // domain: prod && '.indi.com',
     },
 }));
 app.use(passport.initialize());
-app.use(cookie('cookiesecret'));
 app.use(passport.session());
 
 app.get('/', (req, res) => {
@@ -45,6 +66,6 @@ app.use('/user', userRouter);
 app.use('/register', registerRouter);
 app.use('/task', taskRouter);
 
-app.listen(3085, () => {
-    console.log(`backend server / port : ${3085}`);
+app.listen(prod ? process.env.PORT : 3085, () => {
+    console.log(`backend server / port : ${prod ? process.env.PORT : 3085}`);
 });
