@@ -92,7 +92,7 @@ export const actions = {
             commit('loadMainTask', res.data)
         } catch(err) {
             console.error(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });
@@ -109,7 +109,7 @@ export const actions = {
             });
         } catch(err) {
             console.log(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });
@@ -128,7 +128,7 @@ export const actions = {
         }
         catch (err) {
             console.error(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });
@@ -147,7 +147,7 @@ export const actions = {
             });
         }catch(err) {
             console.error(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });
@@ -162,7 +162,7 @@ export const actions = {
         }
         catch(err) {
             console.error(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });
@@ -176,7 +176,7 @@ export const actions = {
             commit('concatBeforeImage', res.data);
         } catch(err) {
             console.error(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });
@@ -190,7 +190,7 @@ export const actions = {
             commit('concatAfterImage', res.data)
         } catch(err) {
             console.error(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });
@@ -207,7 +207,7 @@ export const actions = {
             commit('deleteImgFromMainTask', payload)
         } catch(err) {
             console.error(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });

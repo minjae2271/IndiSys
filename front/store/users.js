@@ -17,7 +17,7 @@ export const actions = {
             commit('setMe', res.data);
         } catch(err) {
             console.error(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });
@@ -35,7 +35,7 @@ export const actions = {
         })
         .catch((err) => {
             console.error(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });
@@ -53,7 +53,7 @@ export const actions = {
         })
         .catch((err) => {
             console.error(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });
@@ -70,7 +70,7 @@ export const actions = {
         })
         .catch((err) => {
             console.error(err);
-            return $nuxt.error({
+            return this.$nuxt.error({
                 statusCode: err.response.status,
                 errorMessage: err.response.data
             });
