@@ -11,6 +11,9 @@ const dotenv = require('dotenv');
 
 const prod = process.env.NODE_ENV === 'production'
 console.log(prod);
+console.log(prod.length);
+console.log(process.env.PORT);
+console.log(process.env.PORT.length);
 const passportConfig = require('./passport');
 const db = require('./models');
 const userRouter = require('./routes/user');
