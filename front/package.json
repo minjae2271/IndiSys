@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "prestart": "npm run build",
     "start": "HOST=0.0.0.0 PORT=80 NODE_ENV=production nuxt start"
   },
   "author": "",
