@@ -30,7 +30,7 @@ if (prod) {
     app.use(hpp());
     app.use(morgan('combined'));
     app.use(cors({
-        origin: 'http://indi-elevator-design',
+        origin: 'http://indi-elevator-design.com',
         credentials: true,
     }));
 
