@@ -30,7 +30,7 @@ if (prod) {
     app.use(hpp());
     app.use(morgan('combined'));
     app.use(cors({
-        origin: 'http://indi-elevator-design.com',
+        origin: ['http://indi-elevator-design.com', 'http://www.indi-elevator-design.com'],
         credentials: true,
     }));
 
@@ -53,7 +53,7 @@ app.use(session({
     cookie: {
         httpOnly: true,
         secure: false,
-        // domain: prod && '.indi.com',
+        domain: prod && '.indi-elevator-design.com',
     },
 }));
 app.use(passport.initialize());
