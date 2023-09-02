@@ -52,7 +52,7 @@ app.use(session({
     secret: process.env.COOKIE_SECRET,
     cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: false,
         domain: process.env.NODE_ENV === 'production' && '.indi-elevator-design.com',
     },
 }));
