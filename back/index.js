@@ -52,8 +52,8 @@ app.use(session({
     secret: process.env.COOKIE_SECRET,
     cookie: {
         httpOnly: true,
-        secure: false,
-        domain: prod && '.indi-elevator-design.com',
+        secure: process.env.NODE_ENV === 'production',
+        domain: process.env.NODE_ENV === 'production' && '.indi-elevator-design.com',
     },
 }));
 app.use(passport.initialize());
