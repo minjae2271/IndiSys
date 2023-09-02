@@ -51,6 +51,7 @@ app.use(cookie(process.env.COOKIE_SECRET));
 app.use(session({
     secret: process.env.COOKIE_SECRET,
     cookie: {
+        saveUninitialized: false,
         httpOnly: true,
         secure: false,
         domain: prod && '.indi-elevator-design.com',
