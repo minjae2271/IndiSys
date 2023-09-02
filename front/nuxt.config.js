@@ -41,7 +41,7 @@ module.exports = {
     },
     axios: {
         // browserBaseURL: 'http://localhost:3085/',
-        baseURL: process.env.NODE_ENV === 'production' ? 'http://3.34.221.239:80/' : 'http://localhost:3085/',
+        baseURL: process.env.NODE_ENV === 'production' ? 'http://api.indi-elevator-design/' : 'http://localhost:3085/',
         https: false,
     },
     moment: {
