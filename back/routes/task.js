@@ -3,6 +3,9 @@ const moment = require("moment");
 const multer = require("multer");
 const multerS3 = require('multer-s3');
 const AWS = require('aws-sdk');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const path = require("path");
 const db = require('../models');
