@@ -41,11 +41,10 @@ const upload = multer({
 })
 
 router.post('/before', isLoggedIn, upload.array('beforeImage'), (req, res, next) => {
-    console.log(req.files)
-    res.json(req.files.map(v => v.filename));
+    res.json(req.files.map(v => v.location));
 });
 router.post('/after', isLoggedIn, upload.array('afterImage'), (req, res, next) => {
-    res.json(req.files.map(v => v.filename));
+    res.json(req.files.map(v => v.location));
 });
 
 router.get('/loadTasks', async (req, res, next) => {
