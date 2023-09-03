@@ -80,7 +80,7 @@
                     </v-card-title>
                     <v-row>
                         <div class="img-div" v-for="(b, i) in mainTask.Images.filter((v) => v.before_after === 'before')" :key="i">
-                            <v-img :src="`http://localhost:3085/${b.src}`"
+                            <v-img :src="`${b.src}`"
                             aspect-ratio="1"
                             max-height="300px"
                             max-width="300px"
@@ -115,7 +115,7 @@
                     </v-row>
                     <v-row>
                         <div class="img-div" v-for="(bimg, i) in beforeImages" :key="bimg">
-                            <v-img :src="`http://localhost:3085/${bimg}`"
+                            <v-img :src="`${bimg}`"
                                 aspect-ratio="1"
                                 max-height="300px"
                                 max-width="300px"
@@ -173,7 +173,7 @@
                     <v-row>
                         <div class="img-div" v-for="(a, i) in mainTask.Images.filter((v) => v.before_after === 'after')" :key="i">
                             <v-img
-                                :src="`http://localhost:3085/${a.src}`"
+                                :src="`${a.src}`"
                                 aspect-ratio="1"
                                 max-height="300px"
                                 max-width="300px"
@@ -209,7 +209,7 @@
                     <v-row>
                         <div class="img-div" v-for="(aimg, i) in afterImages" :key="aimg">
                             <v-img
-                                :src="`http://localhost:3085/${aimg}`"
+                                :src="`${aimg}`"
                                 aspect-ratio="1"
                                 max-height="300px"
                                 max-width="300px"

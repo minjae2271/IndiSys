@@ -1,26 +1,42 @@
 const express = require('express');
 const moment = require("moment");
 const multer = require("multer");
+const multerS3 = require('multer-s3');
+const AWS = require('aws-sdk');
+
 const path = require("path");
 const db = require('../models');
 const { isLoggedIn } = require('./middlewares');
 const Op = db.Sequelize.Op;
 
-const router = express.Router()
+const router = express.Router();
+
+AWS.config.update({
+    region: 'ap-northeast-2',
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_ACCEESS_KEY,
+})
 
 const today = moment().format('YYYY-MM-DD');
 
 const upload = multer({
-    storage: multer.diskStorage({
-        destination(req, file, done) {
-            done(null, 'uploads');
-        },
-        filename(req, file, done) {
-            const ext = path.extname(file.originalname);
-            const basename = path.basename(file.originalname, ext);
-            done(null, basename + Date.now() + ext);
-        },
+    storage: multerS3({
+        s3: new AWS.S3(),
+        bucket: 'indi-elevator-design',
+        key(req, file, cb) {
+            cb(null, `original/${Date.now()}${path.basename(file.originalname)}`);
+        }
     }),
+    // storage: multer.diskStorage({
+    //     destination(req, file, done) {
+    //         done(null, 'uploads');
+    //     },
+    //     filename(req, file, done) {
+    //         const ext = path.extname(file.originalname);
+    //         const basename = path.basename(file.originalname, ext);
+    //         done(null, basename + Date.now() + ext);
+    //     },
+    // }),
     limits: { fileSize: 20 * 1024 * 1024}
 })
 

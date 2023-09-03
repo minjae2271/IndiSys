@@ -23,9 +23,6 @@
                     </v-btn>
                 </template>
                 <template v-else>
-                    <!-- <v-btn text to="/register/company">
-                        회사등록
-                    </v-btn> -->
                     <v-avatar color="indigo">
                         <v-icon dark>
                           mdi-account-circle
