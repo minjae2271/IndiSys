@@ -1,6 +1,7 @@
 <template>
-    <v-container>
-        <v-row>
+    <v-container id="wrap">
+        <TaskBody :mainTask="mainTask"></TaskBody>
+        <!-- <v-row>
             <v-col>
                 <v-card>
                     <v-card-title style="font-size:2em">
@@ -71,7 +72,7 @@
                         </v-card-actions>
                 </v-card>
             </v-col>
-        </v-row>
+        </v-row> -->
         <v-row>
             <v-col>
                 <v-card>
@@ -274,6 +275,9 @@
 </template>
 
 <script>
+
+import TaskBody from "~/components/task/taskSpecification/TaskInfo.vue";
+
 export default {
     head() {
         return {
@@ -311,6 +315,9 @@ export default {
             return this.$store.state.tasks.afterImages;
         }
     },
+    components : {
+        TaskBody,
+    },
     methods: {
         finishTask() {
             this.$store.dispatch('tasks/finishTask', {
@@ -319,20 +326,6 @@ export default {
             .then(() => {
                 this.$router.push('/task/');
             })
-        },
-        async deleteTask() {
-            try {
-                await this.$store.dispatch('tasks/deleteTask', {
-                    id: this.$route.params.id,
-                });
-                this.$router.push('/task')
-            } catch(err) {
-                console.error(err);
-            }
-
-        },       
-        editTask() {
-            this.$router.push(`/task/editTask/${this.$route.params.id}`)
         },
         openBeforeImages() {
             this.$refs.beforeImages.click();
@@ -373,7 +366,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+#wrap {
+    max-width: 1000px;
+}
+
 .img-div {
     height: 300px;
     width: 300px;
