@@ -52,16 +52,26 @@
     <div class="task-body">
         <div class="task-text-wrap">
             <v-card class="card">
-                <v-card-text class="mt-5" style="font-size:2em">
+                <v-card-text class="mt-5" style="font-size:1em">
                     <pre>{{ mainTask.task_text }} </pre>
                 </v-card-text>
             </v-card>
         </div>
         <div class="task-button-wrap">
             <v-btn
-            class="mr-2"
-            outlined
-            @click="editTask"
+                class="mr-2"
+                @click="finishTask"
+                v-if="mainTask.status !== '3'"
+            >
+                <v-icon>
+                    mdi-check-circle
+                </v-icon>
+                작업완료
+            </v-btn>
+            <v-btn
+                class="mr-2"
+                outlined
+                @click="editTask"
             >
                 <v-icon>
                 mdi-pencil
@@ -98,7 +108,7 @@ export default {
         async deleteTask() {
             try {
                 await this.$store.dispatch('tasks/deleteTask', {
-                    id: this.$route.params.id,
+                    id: this.mainTask.id,
                 });
                 this.$router.push('/task')
             } catch(err) {
@@ -107,7 +117,16 @@ export default {
 
         },       
         editTask() {
-            this.$router.push(`/task/editTask/${this.$route.params.id}`)
+            this.$router.push(`/task/editTask/${this.mainTask.id}`)
+        },
+        finishTask() {
+            // console.log(this.mainTask.id)
+            this.$store.dispatch('tasks/finishTask', {
+                id: this.mainTask.id,
+            })
+            .then(() => {
+                this.$router.push('/task/');
+            })
         },
     }
 }

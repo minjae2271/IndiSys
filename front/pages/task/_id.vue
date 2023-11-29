@@ -259,18 +259,6 @@
                 </v-card>
             </v-col>
         </v-row>
-        <v-row>
-            <v-spacer></v-spacer>
-            <v-btn
-                class="mt-7"
-                @click="finishTask"
-            >
-                <v-icon>
-                    mdi-check-circle
-                </v-icon>
-                작업완료
-            </v-btn>
-        </v-row>
     </v-container>
 </template>
 
@@ -319,14 +307,6 @@ export default {
         TaskBody,
     },
     methods: {
-        finishTask() {
-            this.$store.dispatch('tasks/finishTask', {
-                id: this.$route.params.id,
-            })
-            .then(() => {
-                this.$router.push('/task/');
-            })
-        },
         openBeforeImages() {
             this.$refs.beforeImages.click();
         },
