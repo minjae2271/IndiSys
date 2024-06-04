@@ -59,7 +59,8 @@
         </div>
         <div class="task-button-wrap">
             <v-btn
-                class="mr-2"
+                class="mr-7"
+                outlined
                 @click="finishTask"
                 v-if="mainTask.status !== '3'"
             >

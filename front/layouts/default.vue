@@ -5,7 +5,7 @@
                 <v-toolbar-title
                     class="mr-3"
                 >
-                    <nuxt-link to="/">INDI</nuxt-link>
+                    <nuxt-link style="text-decoration: none; color: inherit;" to="/"><h1 >INDI</h1></nuxt-link>
                 </v-toolbar-title>
                 <v-btn text to="/task">
                     일일업무
