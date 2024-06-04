@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "cross-env PORT=80 NODE_ENV=production node server"
+    "start": "cross-env PORT=80 NODE_ENV=production pm2 start server"
   },
   "author": "",
   "license": "ISC",
